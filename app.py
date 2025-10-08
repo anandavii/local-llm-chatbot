@@ -1,25 +1,34 @@
 import streamlit as st
 from llm_client import ask_model
 
-st.title("Local LLM Chatbot")
+st.set_page_config(page_title="Local LLM Chat", layout="wide")
+st.title("Chat with Local LLM")
 
-# Session state to keep conversation
+# Container to store messages
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-user_input = st.text_input("You:", "")
-
-if st.button("Send") and user_input:
-    # Call your local LLM
-    response = ask_model(user_input)
-    
-    # Append messages to session
-    st.session_state.messages.append(("You", user_input))
-    st.session_state.messages.append(("Bot", response))
-
-# Display chat history
-for sender, msg in st.session_state.messages:
-    if sender == "You":
-        st.markdown(f"**You:** {msg}")
+# Display chat messages
+for msg in st.session_state.messages:
+    if msg["role"] == "user":
+        st.chat_message("user").write(msg["content"])
     else:
-        st.markdown(f"**Bot:** {msg}")
+        st.chat_message("assistant").write(msg["content"])
+
+# Input box for user message
+# chat_input allows "Enter" key to submit automatically
+user_input = st.chat_input("Ask me anything...")  # hint appears when empty
+
+if user_input:
+    # Append user message
+    st.session_state.messages.append({"role": "user", "content": user_input})
+    
+    # Display user message immediately
+    st.chat_message("user").write(user_input)
+    
+    # Get model reply
+    reply = ask_model(user_input)
+    
+    # Append and display model reply
+    st.session_state.messages.append({"role": "assistant", "content": reply})
+    st.chat_message("assistant").write(reply)
