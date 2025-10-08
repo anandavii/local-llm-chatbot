@@ -33,3 +33,12 @@ This project provides a simple interface to interact with a local large language
 ## Notes
 - Ensure the local LLM model is running in Docker Model Runner and is accessible at the correct URL.
 - Messages follow the standard roles: system, user, assistant.
+
+
+### Example Chat
+
+#### Example 1
+![example1](/demo/example1.png)
+
+#### Example 2
+![example2](/demo/example2.png)
