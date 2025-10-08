@@ -42,3 +42,6 @@ This project provides a simple interface to interact with a local large language
 
 #### Example 2
 ![example2](/demo/example2.png)
+
+### Chat Interaction Example
+![Chat with SmolLM2](demo/Demo-local-LLM-smollm-.gif)
